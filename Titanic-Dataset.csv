@@ -1,7 +1,6 @@
 PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
 10,1,2,"Nasser, Mrs. Nicholas (Adele Achem)",female,14,1,0,237736,30.0708,,C
 100,0,8,"Kantor, Mr. Sinai",male,34,1,0,244367,26,,S
-102,0,3,"Petroff, Mr. Pastcho (""Pentcho"")",male,,0,0,349215,7.8958,,S
 103,0,1,"White, Mr. Richard Frasar",male,21,0,1,35281,77.2875,D26,S
 104,0,3,"Johansson, Mr. Gustaf Joel",male,33,0,0,7540,8.6542,,S
 105,0,3,"Gustafsson, Mr. Anders Vilhelm",male,37,2,0,3101276,7.925,,S

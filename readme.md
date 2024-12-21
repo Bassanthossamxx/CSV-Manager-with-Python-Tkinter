@@ -1,143 +1,130 @@
-# CSV Manager with Python and Tkinter
-## Table of Contents
-1. [Overview](#overview)
-2. [Features](#features)
-3. [File Structure](#file-structure)
-4. [Installation](#installation)
-5. [Code Explanation](#code-explanation)
-    - [Modules Used](#modules-used)
-    - [GUI with Tkinter](#gui-with-tkinter)
-    - [CSV Operations](#csv-operations)
-6. [How to Use](#how-to-use)
-7. [Contributing](#contributing)
-8. [License](#license)
-
----
+# CSV File Manager Documentation
 
 ## Overview
-This project is a simple desktop application that helps users manage CSV files. It allows you to edit, update, add, and remove data from CSV files in an intuitive graphical user interface (GUI). It’s perfect for beginners to understand both Python programming and the usage of Tkinter for creating GUIs.
-
----
+The CSV File Manager is a simple GUI application built with tkinter that provides basic functionality for managing CSV files. The application allows users to view and modify CSV data through an intuitive graphical interface.
 
 ## Features
-- **Load CSV Files:** Open and display the contents of a CSV file.
-- **Edit Rows:** Modify existing data in the table.
-- **Add Rows:** Insert new rows of data.
-- **Delete Rows:** Remove unwanted rows from the file.
-- **Save Changes:** Save the changes back to the CSV file.
+- Display CSV data in a table format
+- Add new rows to the CSV file
+- Edit existing rows
+- Delete selected rows
 
----
+## Dependencies
+- Python 3.x
+- tkinter (standard library)
+- Custom csv_utils module (for CSV file operations)
 
-## File Structure
-Here is an example of the typical file structure for the project:
+## Classes
 
-```
-CSV-Manager-with-Python-Tkinter/
-|-- main.py
-|-- requirements.txt
-|-- README.md
-```
+### CSVManagerApp
+The main application class that creates the window and handles all GUI interactions and data operations.
 
-### Explanation:
-1. **main.py:** The main script that runs the application.
-2. **requirements.txt:** A list of required Python libraries (if any).
-3. **README.md:** This documentation.
+#### Methods
 
----
+##### `__init__(root)`
+Initializes the application window and sets up all GUI components.
+- Parameters:
+  - `root`: The main tkinter window
 
-## Installation
-To run the project, follow these steps:
+##### `_setup_treeview()`
+Configures the Treeview widget for displaying CSV data.
+- Creates columns based on CSV headers
+- Sets up column headings and widths
+- Configures the display area
 
-1. Clone the repository:
+##### `_create_button_panel()`
+Creates and configures the panel containing action buttons for data operations.
+- Creates Add, Edit, and Delete buttons
+- Arranges buttons horizontally with proper spacing
+
+##### `load_data()`
+Refreshes the Treeview display with current data from memory.
+- Clears existing display
+- Loads all rows from the data array
+- Displays updated content in the table
+
+##### `add_row()`
+Opens a dialog to add a new row to the CSV file.
+- Creates input fields for each column
+- Provides a save button to commit changes
+
+##### `edit_row()`
+Edits the selected row in the Treeview.
+- Shows a warning if no row is selected
+- Opens edit dialog with current values
+- Updates both display and file when saved
+
+##### `delete_row()`
+Deletes the selected row from the CSV file.
+- Shows a warning if no row is selected
+- Removes the row from both display and data
+- Saves changes to file
+
+##### `show_edit_window(title, values=None)`
+Displays a dialog window for adding or editing row data.
+- Parameters:
+  - `title`: Window title ("Add Row" or "Edit Row")
+  - `values`: (Optional) Current values when editing an existing row
+- Creates input fields for each column
+- Handles saving changes to both display and file
+
+## Usage
+
+1. Setup:
    ```bash
-   git clone https://github.com/Bassanthossamxx/CSV-Manager-with-Python-Tkinter.git
-   cd CSV-Manager-with-Python-Tkinter
+   # Ensure you have the required files
+   - main.py
+   - csv_utils.py
+   - Your CSV file (default: "Titanic-Dataset.csv")
    ```
 
-2. Install Python dependencies (if applicable):
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run the application:
+2. Running the Application:
    ```bash
    python main.py
    ```
 
----
+3. Basic Operations:
+   - **View Data**: Data is automatically displayed in the table upon startup
+   - **Add New Row**: 
+     1. Click "Add Row"
+     2. Fill in the values in the popup window
+     3. Click Save
+   - **Edit Row**:
+     1. Select a row in the table
+     2. Click "Edit Row"
+     3. Modify values in the popup window
+     4. Click Save
+   - **Delete Row**:
+     1. Select a row in the table
+     2. Click "Delete Row"
 
-## Code Explanation
+## Error Handling
+The application includes basic error checking:
+- Warnings when no row is selected for edit/delete operations
+- Automatic data refresh after modifications
+- Validation of user actions before processing
 
-### Modules Used
-- **`tkinter`**: Used for creating the graphical user interface (GUI).
-- **`csv`**: Used to read and write CSV files.
-- **`os`**: Helps in handling file operations.
+## File Handling
+- CSV file is read when the application starts
+- Changes are immediately written to the CSV file after modifications
+- Data integrity is maintained through consistent save operations
 
-### GUI with Tkinter
-Tkinter provides the tools for building the interface. The project includes components like:
+## UI Components
+1. Main Window:
+   - Table display (Treeview)
+   - Action buttons panel
 
-- **Buttons**: Trigger actions such as opening a file, saving changes, or adding/removing rows.
-- **Labels and Entry Widgets**: Display and take input from the user.
-- **Treeview (from ttk)**: Displays the contents of the CSV file in a tabular format, similar to a spreadsheet.
+2. Edit/Add Dialog:
+   - Input fields for each column
+   - Save button to commit changes
 
-Example snippet for the GUI:
-```python
-root = Tk()
-root.title("CSV Manager")
+## Limitations
+- Cannot handle very large CSV files efficiently
+- No data validation for input fields
+- No undo/redo functionality
+- No multi-row selection operations
 
-# Create a Treeview to display the CSV data
-tree = ttk.Treeview(root, columns=("Name", "Age", "Country"), show='headings')
-```
-
-### CSV Operations
-- **Load CSV**: Opens a file dialog to select a CSV file and loads its content into the Treeview.
-  ```python
-  with open(filename, 'r') as file:
-      reader = csv.reader(file)
-      for row in reader:
-          tree.insert('', 'end', values=row)
-  ```
-
-- **Add Row**: Appends a new row to the Treeview and prepares to save it to the file.
-  ```python
-  tree.insert('', 'end', values=("", "", ""))
-  ```
-
-- **Edit Row**: Selects a specific row for editing. The user can input new data.
-- **Delete Row**: Deletes the selected row from the Treeview and marks it for removal from the file.
-  ```python
-  selected_item = tree.selection()[0]  # Get selected item
-  tree.delete(selected_item)
-  ```
-
-- **Save Changes**: Writes the updated data back to the CSV file.
-  ```python
-  with open(filename, 'w', newline='') as file:
-      writer = csv.writer(file)
-      for row_id in tree.get_children():
-          row = tree.item(row_id)['values']
-          writer.writerow(row)
-  ```
-
----
-
-## How to Use
-1. Open the application.
-2. Click "Load CSV" to select and load a CSV file.
-3. Use the "Add Row," "Edit Row," or "Delete Row" buttons to manage data.
-4. Save your changes by clicking "Save."
-
----
-
-## Contributing
-Feel free to contribute by forking the repository and submitting a pull request. Any enhancements, bug fixes, or additional features are welcome!
-
----
-
-## License
-This project is open-source and available under the [MIT License](LICENSE).
-
----
-
-### Happy Coding!
-
+## Best Practices
+1. Always select a row before attempting to edit or delete
+2. Ensure all required fields are filled when adding/editing rows
+3. Wait for operations to complete before starting new ones
