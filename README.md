@@ -1,14 +1,13 @@
 # CSV File Manager Documentation
 
 ## Overview
-The CSV File Manager is a GUI application built with tkinter that provides a user-friendly interface for managing CSV files. This application allows users to view, edit, search, sort, and filter CSV data through an intuitive graphical interface.
+The CSV File Manager is a simple GUI application built with tkinter that provides basic functionality for managing CSV files. The application allows users to view and modify CSV data through an intuitive graphical interface.
 
 ## Features
 - Display CSV data in a table format
-- Add, edit, and delete rows
-- Search through data
-- Sort data by columns
-- Filter data based on specific criteria
+- Add new rows to the CSV file
+- Edit existing rows
+- Delete selected rows
 
 ## Dependencies
 - Python 3.x
@@ -29,62 +28,103 @@ Initializes the application window and sets up all GUI components.
 
 ##### `_setup_treeview()`
 Configures the Treeview widget for displaying CSV data.
+- Creates columns based on CSV headers
+- Sets up column headings and widths
+- Configures the display area
 
 ##### `_create_button_panel()`
-Creates and configures the panel containing action buttons.
+Creates and configures the panel containing action buttons for data operations.
+- Creates Add, Edit, and Delete buttons
+- Arranges buttons horizontally with proper spacing
 
 ##### `load_data()`
-Refreshes the Treeview display with current data.
+Refreshes the Treeview display with current data from memory.
+- Clears existing display
+- Loads all rows from the data array
+- Displays updated content in the table
 
 ##### `add_row()`
 Opens a dialog to add a new row to the CSV file.
+- Creates input fields for each column
+- Provides a save button to commit changes
 
 ##### `edit_row()`
 Edits the selected row in the Treeview.
-- Shows a warning if no row is selected.
+- Shows a warning if no row is selected
+- Opens edit dialog with current values
+- Updates both display and file when saved
 
 ##### `delete_row()`
 Deletes the selected row from the CSV file.
-- Shows a warning if no row is selected.
+- Shows a warning if no row is selected
+- Removes the row from both display and data
+- Saves changes to file
 
 ##### `show_edit_window(title, values=None)`
 Displays a dialog window for adding or editing row data.
 - Parameters:
   - `title`: Window title ("Add Row" or "Edit Row")
   - `values`: (Optional) Current values when editing an existing row
-
-##### `search_data()`
-Opens a dialog to search for specific text across all columns.
-- Displays matching rows in the Treeview.
-
-##### `sort_data()`
-Opens a dialog to sort data by a selected column.
-- Updates the display with sorted data.
-
-##### `filter_data()`
-Opens a dialog to filter data based on column values.
-- Updates the display with filtered results.
+- Creates input fields for each column
+- Handles saving changes to both display and file
 
 ## Usage
-1. Ensure all dependencies are installed
-2. Place the CSV file in the same directory as the script
-3. Update the `CSV_FILE` constant if your CSV file has a different name
-4. Run the script:
+
+1. Setup:
+   ```bash
+   # Ensure you have the required files
+   - main.py
+   - csv_utils.py
+   - Your CSV file (default: "Titanic-Dataset.csv")
+   ```
+
+2. Running the Application:
    ```bash
    python main.py
    ```
 
-## Data Operations
-- **Adding Data**: Click "Add Row" and fill in the values in the popup window
-- **Editing Data**: Select a row and click "Edit Row" to modify values
-- **Deleting Data**: Select a row and click "Delete Row" to remove it
-- **Searching**: Click "Search" and enter text to find matching rows
-- **Sorting**: Click "Sort" and select a column to sort the data
-- **Filtering**: Click "Filter", select a column and enter a value to filter rows
+3. Basic Operations:
+   - **View Data**: Data is automatically displayed in the table upon startup
+   - **Add New Row**: 
+     1. Click "Add Row"
+     2. Fill in the values in the popup window
+     3. Click Save
+   - **Edit Row**:
+     1. Select a row in the table
+     2. Click "Edit Row"
+     3. Modify values in the popup window
+     4. Click Save
+   - **Delete Row**:
+     1. Select a row in the table
+     2. Click "Delete Row"
 
 ## Error Handling
-The application includes various error checks and user feedback:
+The application includes basic error checking:
 - Warnings when no row is selected for edit/delete operations
-- Validation for empty search/filter criteria
-- Feedback when no matching results are found
-- Confirmation for data modification operations
+- Automatic data refresh after modifications
+- Validation of user actions before processing
+
+## File Handling
+- CSV file is read when the application starts
+- Changes are immediately written to the CSV file after modifications
+- Data integrity is maintained through consistent save operations
+
+## UI Components
+1. Main Window:
+   - Table display (Treeview)
+   - Action buttons panel
+
+2. Edit/Add Dialog:
+   - Input fields for each column
+   - Save button to commit changes
+
+## Limitations
+- Cannot handle very large CSV files efficiently
+- No data validation for input fields
+- No undo/redo functionality
+- No multi-row selection operations
+
+## Best Practices
+1. Always select a row before attempting to edit or delete
+2. Ensure all required fields are filled when adding/editing rows
+3. Wait for operations to complete before starting new ones
